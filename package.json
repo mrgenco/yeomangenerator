@@ -1,0 +1,15 @@
+{
+  "name": "generator-mrg",
+  "version": "1.0.0",
+  "description": "Custom Yeoman Generator",
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "author": "mrgenco",
+  "dependencies": {
+    "yeoman-generator": "^4.2.0"
+  }
+}
