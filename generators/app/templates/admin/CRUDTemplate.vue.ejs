@@ -1,0 +1,66 @@
+<template>
+    <v-flex>
+      <AbstractCRUD
+        :page-title="pageTitle"
+        :entity-name="entityName"
+        :entity-object="entityObject"
+        :header-object="headerObject"
+        :dialog-width="650"
+      >
+        <!-- Every page can have different form inputs-->
+        <v-layout wrap slot="form" slot-scope="props">
+            <v-flex xs6 sm6>
+                   <v-text-field v-model="props.entity.clientUsername" :rules="[(v) => !!v || 'Input must be provided']" label="Client Username"></v-text-field>
+               </v-flex>
+               <v-flex xs6 sm6>
+                   <v-text-field v-model="props.entity.deviceType" :rules="[(v) => !!v || 'Input must be provided']" label="Device Type"></v-text-field>
+               </v-flex>
+               <v-flex xs6 sm6>
+                   <v-text-field v-model="props.entity.clientOs" :rules="[(v) => !!v || 'Input must be provided']" label="Client OS"></v-text-field>
+               </v-flex>
+               <v-flex xs6 sm6>
+                   <v-text-field v-model="props.entity.receivedField" :rules="[(v) => !!v || 'Input must be provided']" label="Received Field"></v-text-field>
+               </v-flex>
+               <v-flex xs12 sm12>
+                   <v-text-field v-model="props.entity.description" :rules="[(v) => !!v || 'Input must be provided']" label="Description"></v-text-field>
+               </v-flex>
+         </v-layout>
+       </AbstractCRUD>
+     </v-flex>
+   </template>
+   
+  
+  <!-- SCRIPT !-->
+  
+  <script>
+  
+  import API from "../api";
+  import AbstractCRUD from "../components/AbstractCRUD.vue";
+  export default {
+    components: {
+      AbstractCRUD
+    },
+    data: () => ({
+      pageTitle: "<%=pageTitle%>",
+      entityName: "<%=entityName%>",
+      headerObject: [
+        { text: "Client Username", value: "clientUsername" },
+        { text: "Client Username", value: "clientUsername" },
+        { text: "Device Type", value: "deviceType" },
+        { text: "Client OS", value: "clientOs" },
+        { text: "Received Field", value: "receivedField" },
+        { text: "Description", value: "description" }
+      ],
+      entityObject: {
+        id: 0,
+        clientUsername :"",
+        deviceType: "",
+        clientOs: "",
+        receivedField: "",
+        description: ""
+      }
+    })
+  };
+ </script>
+  
+   
