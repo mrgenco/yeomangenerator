@@ -43,25 +43,16 @@
     data: () => ({
       pageTitle: "<%=pageTitle%>",
       entityName: "<%=entityName%>",
-      
-     
       headerObject: [
-        
       <%_ for (field in fields) { _%>
-
           { text: "<%=fields[field].fieldName.toUpperCase()%>", value: "<%=fields[field].fieldName%>" },
-        
       <%_ } _%>
-        
       ],
       entityObject: {
         id: 0,
         <%_ for (field in fields) { _%>
-
         <%=fields[field].fieldName%>: "" ,
-
         <%_ } _%>
-
       }
     })
   };
