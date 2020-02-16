@@ -2,14 +2,11 @@ var Generator = require('yeoman-generator');
 var fields = [];
 module.exports = class extends Generator {
 
-    // The name `constructor` is important here
     constructor(args, opts) {
         // Calling the super constructor is important so our generator is correctly set up
         super(args, opts);
-
+        // Entity fields
         this.fields = [];
-
-        // Next, add your custom code
         this.option('babel'); // This method adds support for a `--babel` flag
     }
 
@@ -27,17 +24,25 @@ module.exports = class extends Generator {
             }]);
 
         await this._getFields();
-        
+
     }
 
     async _getFields() {
 
-        var fields =  await this.prompt([
+        var field = await this.prompt([
             {
                 type: 'confirm',
                 name: 'fieldAdd',
                 message: 'Do you want to add a field to your entity?',
                 default: true
+            },
+            {
+                when: response => response.fieldAdd === true,
+                type: 'list',
+                choices: ["String", "Number", "Boolean"],
+                name: 'fieldType',
+                message: 'What is the type of your field?',
+                default: "String"
             },
             {
                 when: response => response.fieldAdd === true,
@@ -60,25 +65,29 @@ module.exports = class extends Generator {
 
 
         ]);
-
-        if (fields.fieldAdd) {
-            this.fields.push(fields.fieldName);            
-            this.log("fields :" + JSON.stringify(this.fields));
+        if (field.fieldAdd) {
+            this.fields.push(field);
+            this.log("new field added -->" + JSON.stringify(this.fields));
             await this._getFields();
-        } else{ 
+        } else {
             return;
         }
 
     }
 
     writing() {
-        
+
         this.log("fields writing :" + JSON.stringify(this.fields));
         this.fs.copyTpl(
             this.templatePath('admin/CRUDTemplate.vue.ejs'),
             this.destinationPath('public/' + this.answers.entityName + '.vue'),
-            { pageTitle: this.answers.pageTitle, entityName: this.answers.entityName } // user answer `title` used
+            {
+                pageTitle: this.answers.pageTitle,
+                entityName: this.answers.entityName,
+                fields: this.fields
+            }
         );
+        this.log("CRUDTemplate is generated successfully..");
     }
 
 };

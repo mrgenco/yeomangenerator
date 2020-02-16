@@ -1,8 +1,8 @@
 <template>
     <v-flex>
       <AbstractCRUD
-        :page-title="pageTitle"
-        :entity-name="entityName"
+        :page-title="<%=pageTitle%>"
+        :entity-name="<%=entityName%>"
         :entity-object="entityObject"
         :header-object="headerObject"
         :dialog-width="650"
@@ -43,21 +43,25 @@
     data: () => ({
       pageTitle: "<%=pageTitle%>",
       entityName: "<%=entityName%>",
+      
+     
       headerObject: [
-        { text: "Client Username", value: "clientUsername" },
-        { text: "Client Username", value: "clientUsername" },
-        { text: "Device Type", value: "deviceType" },
-        { text: "Client OS", value: "clientOs" },
-        { text: "Received Field", value: "receivedField" },
-        { text: "Description", value: "description" }
+        
+      <%_ for (field in fields) { _%>
+
+          { text: "<%=fields[field].fieldName.toUpperCase()%>", value: "<%=fields[field].fieldName%>" },
+        
+      <%_ } _%>
+        
       ],
       entityObject: {
         id: 0,
-        clientUsername :"",
-        deviceType: "",
-        clientOs: "",
-        receivedField: "",
-        description: ""
+        <%_ for (field in fields) { _%>
+
+        <%=fields[field].fieldName%>: "" ,
+
+        <%_ } _%>
+
       }
     })
   };
