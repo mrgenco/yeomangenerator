@@ -1,5 +1,4 @@
 var Generator = require('yeoman-generator');
-var fields = [];
 module.exports = class extends Generator {
 
     constructor(args, opts) {
@@ -11,7 +10,15 @@ module.exports = class extends Generator {
     }
 
     async prompting() {
+        this.log("*** Welcome to MRG CRUD Generator ***");
         this.answers = await this.prompt([
+            {
+                type: 'list',
+                choices: ["COMMERCIAL", "COMMERCIAL_I18N", "OWNER", "COMMERCIAL_LOGS"],
+                name: 'schemaName',
+                message: 'Select the database schema where your table is located.',
+                default: "COMMERCIAL"
+            },
             {
                 type: 'input',
                 name: 'pageTitle',
@@ -77,9 +84,8 @@ module.exports = class extends Generator {
 
     writing() {
 
-        this.log("fields writing :" + JSON.stringify(this.fields));
         this.fs.copyTpl(
-            this.templatePath('admin/CRUDTemplate.vue.ejs'),
+            this.templatePath('admin/CRUDPageTemplate.vue.ejs'),
             this.destinationPath('public/' + this.answers.entityName + '.vue'),
             {
                 pageTitle: this.answers.pageTitle,
@@ -87,7 +93,52 @@ module.exports = class extends Generator {
                 fields: this.fields
             }
         );
-        this.log("CRUDTemplate is generated successfully..");
+       // this.log(this.answers.pageTitle+" is generated successfully..");
+
+            
+        this.fs.copyTpl(
+            this.templatePath('admin/ControllerTemplate.java.ejs'),
+            this.destinationPath('public/' + this.answers.entityName + 'Controller.java'),
+            {
+                entityName: this.answers.entityName,
+                schemaName: this.answers.schemaName
+            }
+        );
+        //this.log(this.answers.entityName+"Controller is generated successfully..");
+
+        this.fs.copyTpl(
+            this.templatePath('admin/RepositoryTemplate.java.ejs'),
+            this.destinationPath('public/' + this.answers.entityName + 'Repository.java'),
+            {
+                entityName: this.answers.entityName,
+                schemaName: this.answers.schemaName
+            }
+        );
+        //this.log(this.answers.entityName+"Repository is generated successfully..");
+
+
+        this.fs.copyTpl(
+            this.templatePath('admin/ServiceTemplate.java.ejs'),
+            this.destinationPath('public/' + this.answers.entityName + 'Service.java'),
+            {
+                entityName: this.answers.entityName,
+                schemaName: this.answers.schemaName
+            }
+        );
+        //this.log(this.answers.entityName+"Service is generated successfully..");
+
+
+        this.fs.copyTpl(
+            this.templatePath('admin/ServiceImplTemplate.java.ejs'),
+            this.destinationPath('public/' + this.answers.entityName + 'ServiceImpl.java'),
+            {
+                entityName: this.answers.entityName,
+                schemaName: this.answers.schemaName
+            }
+        );
+       // this.log(this.answers.entityName+"ServiceImpl is generated successfully..");
+
+
     }
 
 };
