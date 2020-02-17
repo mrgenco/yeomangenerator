@@ -1,0 +1,12 @@
+package com.thy.bwsadmin.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.thy.bwsadmin.model.<%=schemaName.toLowerCase()%>.<%=entityName%>;
+import com.thy.bwsadmin.service.<%=entityName%>Service;
+
+
+@RestController
+@RequestMapping("api/<%=entityName.toLowerCase()%>")
+public class <%=entityName%>Controller extends BaseController<<%=entityName%>, <%=entityName%>Service> {
+}

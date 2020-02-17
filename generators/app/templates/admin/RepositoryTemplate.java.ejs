@@ -1,0 +1,9 @@
+package com.thy.bwsadmin.repository.owner;
+
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
+import com.thy.bwsadmin.model.<%=schemaName.toLowerCase()%>.<%=entityName%>;
+
+@Repository
+public interface <%=entityName%>Repository extends PagingAndSortingRepository<<%=entityName%>, Long> {
+}

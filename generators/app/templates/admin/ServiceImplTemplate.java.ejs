@@ -1,0 +1,10 @@
+package com.thy.bwsadmin.service.impl;
+
+import org.springframework.stereotype.Service;
+import com.thy.bwsadmin.model.<%=schemaName.toLowerCase()%>.<%=entityName%>;
+import com.thy.bwsadmin.repository.<%=schemaName.toLowerCase()%>.<%=entityName%>Repository;
+import com.thy.bwsadmin.service.<%=entityName%>Service;
+
+@Service
+public class <%=entityName%>ServiceImpl extends BaseServiceImpl<<%=entityName%>, <%=entityName%>Repository> implements <%=entityName%>Service {
+}
